@@ -1,0 +1,1097 @@
+SELECT min(recorddatetime), max(recorddatetime) FROM redi_archive.rawrtls_archive_2013_meta2_1sec;
+-- '2013-07-15 07:03:30', '2013-09-20 03:59:59'
+
+-- Turn 2 Meta vs. REDI = idcalfgrp = 24
+Drop table if exists rawrtls_2013_meta2_1sec;
+create table rawrtls_2013_meta2_1sec as (Select * from redi_archive.rawrtls_archive_2013_meta2_1sec);
+-- 50214144 row(s) affected Records: 50214144  Duplicates: 0  Warnings: 0
+
+ALTER TABLE `pbsdd`.`rawrtls_2013_meta2_1sec` 
+ADD INDEX `recorddattime` (`recorddatetime` ASC);
+
+Truncate table rawrtls;
+TRUNCATE `pbsdd`.`hourlyrtls`;
+Truncate table hourlyrtls_02hr;
+Truncate table hourlyrtls_06hr;
+Truncate table hourlyrtls_12hr;
+Truncate table hourlyrtls_24hr;
+truncate table hourlyrtls_48hr;
+truncate table hourlyrtls_car;
+Truncate table hourlyrtls_cudiffc;
+Truncate table hourlyrtls_cudiffg;
+Truncate table hourlyrtls_gar;
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime < '2013-07-15 23:59:59';
+-- 2050618 row(s) affected Records: 2050618  Duplicates: 0  Warnings: 0
+
+
+call 01_Smartbow;
+-- 1 row(s) returned  1415.102 sec / 0.000 sec
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+-- 2.625 sec
+-- 03 ran really fast.  I checked a couple of the hourly tables and found that there was data in them.  It could have run
+-- fast since this was the first 24 hours of data.
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-15 23:59:59'and recorddatetime < '2013-07-16 23:59:59';
+-- 3049221 row(s) affected Records: 3049221  Duplicates: 0  Warnings: 0
+
+call 01_Smartbow;
+-- 10:57:51	call 01_Smartbow	2 row(s) returned	2158.619 sec / 0.000 sec
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+-- 11:34:12	Call 03_Smartbow	0 row(s) affected	13.238 sec
+
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-16 23:59:59'and recorddatetime < '2013-07-17 23:59:59';
+-- 2896698 row(s) affected Records: 2896698  Duplicates: 0  Warnings: 0
+call 01_Smartbow;
+-- 12:42:10	call 01_Smartbow	2 row(s) returned	2009.295 sec / 0.000 sec
+Call 02_Smartbow;
+Call 03_Smartbow;
+-- 14:15:04	Call 03_Smartbow	0 row(s) affected	25.697 sec
+
+
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-17 23:59:59'and recorddatetime < '2013-07-18 23:59:59';
+-- 14:16:21	Insert into rawrtls  (rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location) Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from   rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-17 23:59:59'and recorddatetime < '2013-07-18 23:59:59'	2851167 row(s) affected Records: 2851167  Duplicates: 0  Warnings: 0	194.018 sec
+
+call 01_Smartbow;
+-- 14:23:23	call 01_Smartbow	2 row(s) returned	1895.373 sec / 0.000 sec
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+-- 14:55:19	Call 03_Smartbow	0 row(s) affected	37.202 sec
+
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-18 23:59:59'and recorddatetime < '2013-07-19 23:59:59';
+-- 16:14:18	Insert into rawrtls  (rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location) Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from   rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-18 23:59:59'and recorddatetime < '2013-07-19 23:59:59'	2851167 row(s) affected Records: 2851167  Duplicates: 0  Warnings: 0	176.940 sec
+
+call 01_Smartbow;
+-- 16:24:37	call 01_Smartbow	2 row(s) returned	1926.145 sec / 0.000 sec
+
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+-- 
+
+
+
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-19 23:59:59'and recorddatetime < '2013-07-20 23:59:59';
+-- 17:03:18	Insert into rawrtls  (rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location) Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from   rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-19 23:59:59'and recorddatetime < '2013-07-20 23:59:59'	2851167 row(s) affected Records: 2851167  Duplicates: 0  Warnings: 0	177.454 sec
+
+call 01_Smartbow;
+-- 1886.131 sec / 0.000 sec
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+-- 
+
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-20 23:59:59'and recorddatetime < '2013-07-23 23:59:59';
+-- 19:23:51	Insert into rawrtls  (rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location) Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from   rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-20 23:59:59'and recorddatetime < '2013-07-23 23:59:59'	8553567 row(s) affected Records: 8553567  Duplicates: 0  Warnings: 0	656.925 sec
+
+call 01_Smartbow;
+-- 19:52:03	call 01_Smartbow	2 row(s) returned	6282.160 sec / 0.000 sec
+
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+-- 21:37:48	Call 03_Smartbow	0 row(s) affected	247.892 sec
+
+
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-23 23:59:59'and recorddatetime < '2013-07-25 23:59:59';
+-- 07:34:21	Insert into rawrtls  (rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location) Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from   rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-23 23:59:59'and recorddatetime < '2013-07-25 23:59:59'	5702367 row(s) affected Records: 5702367  Duplicates: 0  Warnings: 0	423.619 sec
+call 01_Smartbow;
+-- 07:41:25	call 01_Smartbow	2 row(s) returned	4062.758 sec / 0.000 sec
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+-- 08:49:52	Call 03_Smartbow	0 row(s) affected	245.926 sec
+
+
+
+
+truncate table rawrtls;
+optimize table rawrtls;
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-25 23:59:59'and recorddatetime < '2013-07-27 23:59:59';
+-- 12:13:33	Insert into rawrtls  (rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location) Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from   rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-25 23:59:59'and recorddatetime < '2013-07-27 23:59:59'	5702367 row(s) affected Records: 5702367  Duplicates: 0  Warnings: 0	429.301 sec
+
+call 01_Smartbow;
+-- 12:22:07	call 01_Smartbow	2 row(s) returned	4033.088 sec / 0.000 sec
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+-- 13:30:08	Call 03_Smartbow	0 row(s) affected	292.860 sec
+
+
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-27 23:59:59'and recorddatetime < '2013-07-29 23:59:59';
+-- 
+call 01_Smartbow;
+-- 13:42:20	call 01_Smartbow	2 row(s) returned	3733.755 sec / 0.000 sec
+Call 02_Smartbow;
+Call 03_Smartbow;
+-- 14:45:16	Call 03_Smartbow	0 row(s) affected	328.752 sec
+
+-- ******************************************************************
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-29 23:59:59'and recorddatetime < '2013-07-31 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+truncate table rawrtls;
+16:24:27	Insert into rawrtls  (rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location) Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from   rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-08 23:59:59'and recorddatetime < '2013-08-10 23:59:59'	949373 row(s) affected Records: 949373  Duplicates: 0  Warnings: 0	53.357 sec
+
+
+
+select count(*) from rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-01 00:00:00' and recorddatetime < '2013-08-01 23:59:59'
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-07-31 23:59:59'and recorddatetime < '2013-08-02 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-02 23:59:59'and recorddatetime < '2013-08-04 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-04 23:59:59'and recorddatetime < '2013-08-06 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-06 23:59:59'and recorddatetime < '2013-08-08 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-08 23:59:59'and recorddatetime < '2013-08-10 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-10 23:59:59'and recorddatetime < '2013-08-12 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-12 23:59:59'and recorddatetime < '2013-08-14 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-14 23:59:59'and recorddatetime < '2013-08-16 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-16 23:59:59'and recorddatetime < '2013-08-18 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-18 23:59:59'and recorddatetime < '2013-08-20 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-20 23:59:59'and recorddatetime < '2013-08-22 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-22 23:59:59'and recorddatetime < '2013-08-24 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-24 23:59:59'and recorddatetime < '2013-08-26 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-26 23:59:59'and recorddatetime < '2013-08-28 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+
+Insert into rawrtls 
+(rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location)
+Select rtlstag, idcalfinfo, recorddatetime, xcoord, ycoord, location from 
+ rawrtls_2013_meta2_1sec where recorddatetime > '2013-08-28 23:59:59'and recorddatetime < '2013-08-31 23:59:59';
+-- 
+call 01_Smartbow;
+
+Call 02_Smartbow;
+Call 03_Smartbow;
+
+
+
+-- Create Hourly tables for meta2 that can be moved to the Amazon server
+--  Note for some reason there was missing data in the archive files for this trun and we only have full data through 7-31-2013
+CREATE TABLE `meta2_hourlyrtls` (
+  `hrrecno` int(11) NOT NULL AUTO_INCREMENT,
+  `idcalfinfo` int(10) DEFAULT NULL,
+  `idcalfgrp` int(11) DEFAULT NULL,
+  `urecid` varchar(45) DEFAULT NULL,
+  `urecidorder` int(11) DEFAULT NULL,
+  `chunk` int(11) DEFAULT NULL,
+  `rtlstag` varchar(45) DEFAULT NULL,
+  `numsecs` double DEFAULT NULL,
+  `recorddate` date DEFAULT NULL,
+  `recordhour` int(2) DEFAULT NULL,
+  `recorddatehr` datetime DEFAULT NULL,
+  `disttrav` double DEFAULT NULL,
+  `avgofspeedmpers` double DEFAULT NULL,
+  `maxofspeedmpers` double DEFAULT NULL,
+  `perinwater` double DEFAULT NULL,
+  `perinfeedbunk` double DEFAULT NULL,
+  `perinshed` double DEFAULT NULL,
+  `perinwaterzone` double DEFAULT NULL,
+  `perinfeedbunkzone` double DEFAULT NULL,
+  `perinfencezone` double DEFAULT NULL,
+  `persecspeed2mpersormore` double DEFAULT NULL,
+  `feedbouts` double DEFAULT NULL,
+  `avgsecinfeedbout` double DEFAULT NULL,
+  `waterbouts` double DEFAULT NULL,
+  `avgsecinwaterbout` double DEFAULT NULL,
+  `shedbouts` double DEFAULT NULL,
+  `avgsecinshedbout` double DEFAULT NULL,
+  `fencebouts` double DEFAULT NULL,
+  `avgsecinfencebout` double DEFAULT NULL,
+  `waterzonebouts` double DEFAULT NULL,
+  `avgsecinwaterzonebout` double DEFAULT NULL,
+  `feedzonebouts` double DEFAULT NULL,
+  `avgsecinfeedzonebout` double DEFAULT NULL,
+  `avgclosestcalfdist` double DEFAULT NULL,
+  `avgcalveswithin1m` double DEFAULT NULL,
+  `avgcalveswithin3m` double DEFAULT NULL,
+  `avgcalveswithin5m` double DEFAULT NULL,
+  `per0win1m` double DEFAULT NULL,
+  `per0win3m` double DEFAULT NULL,
+  `per0win5m` double DEFAULT NULL,
+  `per4ormorein3m` double DEFAULT NULL,
+  `per4ormorein5m` double DEFAULT NULL,
+  `per7ormorein3m` double DEFAULT NULL,
+  `per7ormorein5m` double DEFAULT NULL,
+  `per10ormorein3m` double DEFAULT NULL,
+  `per10ormorein5m` double DEFAULT NULL,
+  `perclosest7maway` double DEFAULT NULL,
+  `perclosest10maway` double DEFAULT NULL,
+  `perclosest15maway` double DEFAULT NULL,
+  `in2hr` tinyint(4) DEFAULT '0',
+  `in6hr` tinyint(4) DEFAULT '0',
+  `in12hr` tinyint(4) DEFAULT '0',
+  `in24hr` tinyint(4) DEFAULT '0',
+  `in48hr` tinyint(4) DEFAULT '0',
+  `ingar` tinyint(4) DEFAULT '0',
+  `incudiffc` tinyint(4) DEFAULT '0',
+  `incar` tinyint(4) DEFAULT '0',
+  `incudiffg` tinyint(4) DEFAULT '0',
+  `classed` tinyint(1) DEFAULT '0',
+  `ingrpavg` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`hrrecno`),
+  KEY `urecidorder_index` (`urecidorder`),
+  KEY `idcalfinfo_index` (`idcalfinfo`),
+  KEY `urecid_index` (`urecid`)
+) ENGINE=MyISAM AUTO_INCREMENT=23796 DEFAULT CHARSET=latin1;
+CREATE TABLE `meta2_hourlyrtls_car` (
+  `idhourlyrtls` int(11) NOT NULL,
+  `idcalfinfo` int(10) DEFAULT NULL,
+  `urecid` varchar(45) DEFAULT NULL,
+  `urecidorder` int(11) DEFAULT NULL,
+  `rtlstag` varchar(45) DEFAULT NULL,
+  `recorddate` date DEFAULT NULL,
+  `recordhour` int(2) DEFAULT NULL,
+  `car_ma6_disttrav` double DEFAULT NULL,
+  `car_ma6_avgofspeedmpers` double DEFAULT NULL,
+  `car_ma6_maxofspeedmpers` double DEFAULT NULL,
+  `car_ma6_perinwater` double DEFAULT NULL,
+  `car_ma6_perinfeedbunk` double DEFAULT NULL,
+  `car_ma6_perinshed` double DEFAULT NULL,
+  `car_ma6_perinwaterzone` double DEFAULT NULL,
+  `car_ma6_perinfeedbunkzone` double DEFAULT NULL,
+  `car_ma6_perinfencezone` double DEFAULT NULL,
+  `car_ma6_persecspeed2mpersormore` double DEFAULT NULL,
+  `car_ma6_feedbouts` double DEFAULT NULL,
+  `car_ma6_avgsecinfeedbout` double DEFAULT NULL,
+  `car_ma6_waterbouts` double DEFAULT NULL,
+  `car_ma6_avgsecinwaterbout` double DEFAULT NULL,
+  `car_ma6_shedbouts` double DEFAULT NULL,
+  `car_ma6_avgsecinshedbout` double DEFAULT NULL,
+  `car_ma6_fencebouts` double DEFAULT NULL,
+  `car_ma6_avgsecinfencebout` double DEFAULT NULL,
+  `car_ma6_waterzonebouts` double DEFAULT NULL,
+  `car_ma6_avgsecinwaterzonebout` double DEFAULT NULL,
+  `car_ma6_feedzonebouts` double DEFAULT NULL,
+  `car_ma6_avgsecinfeedzonebout` double DEFAULT NULL,
+  `car_ma6_avgclosestcalfdist` double DEFAULT NULL,
+  `car_ma6_avgcalveswithin1m` double DEFAULT NULL,
+  `car_ma6_avgcalveswithin3m` double DEFAULT NULL,
+  `car_ma6_avgcalveswithin5m` double DEFAULT NULL,
+  `car_ma6_per0win1m` double DEFAULT NULL,
+  `car_ma6_per0win3m` double DEFAULT NULL,
+  `car_ma6_per0win5m` double DEFAULT NULL,
+  `car_ma6_per4ormorein3m` double DEFAULT NULL,
+  `car_ma6_per4ormorein5m` double DEFAULT NULL,
+  `car_ma6_per7ormorein3m` double DEFAULT NULL,
+  `car_ma6_per7ormorein5m` double DEFAULT NULL,
+  `car_ma6_per10ormorein3m` double DEFAULT NULL,
+  `car_ma6_per10ormorein5m` double DEFAULT NULL,
+  `car_ma6_perclosest7maway` double DEFAULT NULL,
+  `car_ma6_perclosest10maway` double DEFAULT NULL,
+  `car_ma12_disttrav` double DEFAULT NULL,
+  `car_ma12_avgofspeedmpers` double DEFAULT NULL,
+  `car_ma12_maxofspeedmpers` double DEFAULT NULL,
+  `car_ma12_perinwater` double DEFAULT NULL,
+  `car_ma12_perinfeedbunk` double DEFAULT NULL,
+  `car_ma12_perinshed` double DEFAULT NULL,
+  `car_ma12_perinwaterzone` double DEFAULT NULL,
+  `car_ma12_perinfeedbunkzone` double DEFAULT NULL,
+  `car_ma12_perinfencezone` double DEFAULT NULL,
+  `car_ma12_persecspeed2mpersormore` double DEFAULT NULL,
+  `car_ma12_feedbouts` double DEFAULT NULL,
+  `car_ma12_avgsecinfeedbout` double DEFAULT NULL,
+  `car_ma12_waterbouts` double DEFAULT NULL,
+  `car_ma12_avgsecinwaterbout` double DEFAULT NULL,
+  `car_ma12_shedbouts` double DEFAULT NULL,
+  `car_ma12_avgsecinshedbout` double DEFAULT NULL,
+  `car_ma12_fencebouts` double DEFAULT NULL,
+  `car_ma12_avgsecinfencebout` double DEFAULT NULL,
+  `car_ma12_waterzonebouts` double DEFAULT NULL,
+  `car_ma12_avgsecinwaterzonebout` double DEFAULT NULL,
+  `car_ma12_feedzonebouts` double DEFAULT NULL,
+  `car_ma12_avgsecinfeedzonebout` double DEFAULT NULL,
+  `car_ma12_avgclosestcalfdist` double DEFAULT NULL,
+  `car_ma12_avgcalveswithin1m` double DEFAULT NULL,
+  `car_ma12_avgcalveswithin3m` double DEFAULT NULL,
+  `car_ma12_avgcalveswithin5m` double DEFAULT NULL,
+  `car_ma12_per0win1m` double DEFAULT NULL,
+  `car_ma12_per0win3m` double DEFAULT NULL,
+  `car_ma12_per0win5m` double DEFAULT NULL,
+  `car_ma12_per4ormorein3m` double DEFAULT NULL,
+  `car_ma12_per4ormorein5m` double DEFAULT NULL,
+  `car_ma12_per7ormorein3m` double DEFAULT NULL,
+  `car_ma12_per7ormorein5m` double DEFAULT NULL,
+  `car_ma12_per10ormorein3m` double DEFAULT NULL,
+  `car_ma12_per10ormorein5m` double DEFAULT NULL,
+  `car_ma12_perclosest7maway` double DEFAULT NULL,
+  `car_ma12_perclosest10maway` double DEFAULT NULL,
+  `car_ma24_disttrav` double DEFAULT NULL,
+  `car_ma24_avgofspeedmpers` double DEFAULT NULL,
+  `car_ma24_maxofspeedmpers` double DEFAULT NULL,
+  `car_ma24_perinwater` double DEFAULT NULL,
+  `car_ma24_perinfeedbunk` double DEFAULT NULL,
+  `car_ma24_perinshed` double DEFAULT NULL,
+  `car_ma24_perinwaterzone` double DEFAULT NULL,
+  `car_ma24_perinfeedbunkzone` double DEFAULT NULL,
+  `car_ma24_perinfencezone` double DEFAULT NULL,
+  `car_ma24_persecspeed2mpersormore` double DEFAULT NULL,
+  `car_ma24_feedbouts` double DEFAULT NULL,
+  `car_ma24_avgsecinfeedbout` double DEFAULT NULL,
+  `car_ma24_waterbouts` double DEFAULT NULL,
+  `car_ma24_avgsecinwaterbout` double DEFAULT NULL,
+  `car_ma24_shedbouts` double DEFAULT NULL,
+  `car_ma24_avgsecinshedbout` double DEFAULT NULL,
+  `car_ma24_fencebouts` double DEFAULT NULL,
+  `car_ma24_avgsecinfencebout` double DEFAULT NULL,
+  `car_ma24_waterzonebouts` double DEFAULT NULL,
+  `car_ma24_avgsecinwaterzonebout` double DEFAULT NULL,
+  `car_ma24_feedzonebouts` double DEFAULT NULL,
+  `car_ma24_avgsecinfeedzonebout` double DEFAULT NULL,
+  `car_ma24_avgclosestcalfdist` double DEFAULT NULL,
+  `car_ma24_avgcalveswithin1m` double DEFAULT NULL,
+  `car_ma24_avgcalveswithin3m` double DEFAULT NULL,
+  `car_ma24_avgcalveswithin5m` double DEFAULT NULL,
+  `car_ma24_per0win1m` double DEFAULT NULL,
+  `car_ma24_per0win3m` double DEFAULT NULL,
+  `car_ma24_per0win5m` double DEFAULT NULL,
+  `car_ma24_per4ormorein3m` double DEFAULT NULL,
+  `car_ma24_per4ormorein5m` double DEFAULT NULL,
+  `car_ma24_per7ormorein3m` double DEFAULT NULL,
+  `car_ma24_per7ormorein5m` double DEFAULT NULL,
+  `car_ma24_per10ormorein3m` double DEFAULT NULL,
+  `car_ma24_per10ormorein5m` double DEFAULT NULL,
+  `car_ma24_perclosest7maway` double DEFAULT NULL,
+  `car_ma24_perclosest10maway` double DEFAULT NULL,
+  `car_ma48_disttrav` double DEFAULT NULL,
+  `car_ma48_avgofspeedmpers` double DEFAULT NULL,
+  `car_ma48_maxofspeedmpers` double DEFAULT NULL,
+  `car_ma48_perinwater` double DEFAULT NULL,
+  `car_ma48_perinfeedbunk` double DEFAULT NULL,
+  `car_ma48_perinshed` double DEFAULT NULL,
+  `car_ma48_perinwaterzone` double DEFAULT NULL,
+  `car_ma48_perinfeedbunkzone` double DEFAULT NULL,
+  `car_ma48_perinfencezone` double DEFAULT NULL,
+  `car_ma48_persecspeed2mpersormore` double DEFAULT NULL,
+  `car_ma48_feedbouts` double DEFAULT NULL,
+  `car_ma48_avgsecinfeedbout` double DEFAULT NULL,
+  `car_ma48_waterbouts` double DEFAULT NULL,
+  `car_ma48_avgsecinwaterbout` double DEFAULT NULL,
+  `car_ma48_shedbouts` double DEFAULT NULL,
+  `car_ma48_avgsecinshedbout` double DEFAULT NULL,
+  `car_ma48_fencebouts` double DEFAULT NULL,
+  `car_ma48_avgsecinfencebout` double DEFAULT NULL,
+  `car_ma48_waterzonebouts` double DEFAULT NULL,
+  `car_ma48_avgsecinwaterzonebout` double DEFAULT NULL,
+  `car_ma48_feedzonebouts` double DEFAULT NULL,
+  `car_ma48_avgsecinfeedzonebout` double DEFAULT NULL,
+  `car_ma48_avgclosestcalfdist` double DEFAULT NULL,
+  `car_ma48_avgcalveswithin1m` double DEFAULT NULL,
+  `car_ma48_avgcalveswithin3m` double DEFAULT NULL,
+  `car_ma48_avgcalveswithin5m` double DEFAULT NULL,
+  `car_ma48_per0win1m` double DEFAULT NULL,
+  `car_ma48_per0win3m` double DEFAULT NULL,
+  `car_ma48_per0win5m` double DEFAULT NULL,
+  `car_ma48_per4ormorein3m` double DEFAULT NULL,
+  `car_ma48_per4ormorein5m` double DEFAULT NULL,
+  `car_ma48_per7ormorein3m` double DEFAULT NULL,
+  `car_ma48_per7ormorein5m` double DEFAULT NULL,
+  `car_ma48_per10ormorein3m` double DEFAULT NULL,
+  `car_ma48_per10ormorein5m` double DEFAULT NULL,
+  `car_ma48_perclosest7maway` double DEFAULT NULL,
+  `car_ma48_perclosest10maway` double DEFAULT NULL,
+  UNIQUE KEY `idhourlyrtls_UNIQUE` (`idhourlyrtls`),
+  KEY `urecidorder_index` (`urecidorder`),
+  KEY `idcalfinfo_index` (`idcalfinfo`),
+  KEY `urecid_index` (`urecid`),
+  KEY `idhourlyrtls` (`idhourlyrtls`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+CREATE TABLE `meta2_hourlyrtls_gar` (
+  `idhourlyrtls` int(11) NOT NULL,
+  `idcalfinfo` int(10) DEFAULT NULL,
+  `urecid` varchar(45) DEFAULT NULL,
+  `urecidorder` int(11) DEFAULT NULL,
+  `rtlstag` varchar(45) DEFAULT NULL,
+  `recorddate` date DEFAULT NULL,
+  `recordhour` int(2) DEFAULT NULL,
+  `gar_disttrav` double DEFAULT NULL,
+  `gar_avgofspeedmpers` double DEFAULT NULL,
+  `gar_maxofspeedmpers` double DEFAULT NULL,
+  `gar_perinwater` double DEFAULT NULL,
+  `gar_perinfeedbunk` double DEFAULT NULL,
+  `gar_perinshed` double DEFAULT NULL,
+  `gar_perinwaterzone` double DEFAULT NULL,
+  `gar_perinfeedbunkzone` double DEFAULT NULL,
+  `gar_perinfencezone` double DEFAULT NULL,
+  `gar_persecspeed2mpersormore` double DEFAULT NULL,
+  `gar_feedbouts` double DEFAULT NULL,
+  `gar_avgsecinfeedbout` double DEFAULT NULL,
+  `gar_waterbouts` double DEFAULT NULL,
+  `gar_avgsecinwaterbout` double DEFAULT NULL,
+  `gar_shedbouts` double DEFAULT NULL,
+  `gar_avgsecinshedbout` double DEFAULT NULL,
+  `gar_fencebouts` double DEFAULT NULL,
+  `gar_avgsecinfencebout` double DEFAULT NULL,
+  `gar_waterzonebouts` double DEFAULT NULL,
+  `gar_avgsecinwaterzonebout` double DEFAULT NULL,
+  `gar_feedzonebouts` double DEFAULT NULL,
+  `gar_avgsecinfeedzonebout` double DEFAULT NULL,
+  `gar_avgclosestcalfdist` double DEFAULT NULL,
+  `gar_avgcalveswithin1m` double DEFAULT NULL,
+  `gar_avgcalveswithin3m` double DEFAULT NULL,
+  `gar_avgcalveswithin5m` double DEFAULT NULL,
+  `gar_per0win1m` double DEFAULT NULL,
+  `gar_per0win3m` double DEFAULT NULL,
+  `gar_per0win5m` double DEFAULT NULL,
+  `gar_per4ormorein3m` double DEFAULT NULL,
+  `gar_per4ormorein5m` double DEFAULT NULL,
+  `gar_per7ormorein3m` double DEFAULT NULL,
+  `gar_per7ormorein5m` double DEFAULT NULL,
+  `gar_per10ormorein3m` double DEFAULT NULL,
+  `gar_per10ormorein5m` double DEFAULT NULL,
+  `gar_perclosest7maway` double DEFAULT NULL,
+  `gar_perclosest10maway` double DEFAULT NULL,
+  `gar_ma12_disttrav` double DEFAULT NULL,
+  `gar_ma12_avgofspeedmpers` double DEFAULT NULL,
+  `gar_ma12_maxofspeedmpers` double DEFAULT NULL,
+  `gar_ma12_perinwater` double DEFAULT NULL,
+  `gar_ma12_perinfeedbunk` double DEFAULT NULL,
+  `gar_ma12_perinshed` double DEFAULT NULL,
+  `gar_ma12_perinwaterzone` double DEFAULT NULL,
+  `gar_ma12_perinfeedbunkzone` double DEFAULT NULL,
+  `gar_ma12_perinfencezone` double DEFAULT NULL,
+  `gar_ma12_persecspeed2mpersormore` double DEFAULT NULL,
+  `gar_ma12_feedbouts` double DEFAULT NULL,
+  `gar_ma12_avgsecinfeedbout` double DEFAULT NULL,
+  `gar_ma12_waterbouts` double DEFAULT NULL,
+  `gar_ma12_avgsecinwaterbout` double DEFAULT NULL,
+  `gar_ma12_shedbouts` double DEFAULT NULL,
+  `gar_ma12_avgsecinshedbout` double DEFAULT NULL,
+  `gar_ma12_fencebouts` double DEFAULT NULL,
+  `gar_ma12_avgsecinfencebout` double DEFAULT NULL,
+  `gar_ma12_waterzonebouts` double DEFAULT NULL,
+  `gar_ma12_avgsecinwaterzonebout` double DEFAULT NULL,
+  `gar_ma12_feedzonebouts` double DEFAULT NULL,
+  `gar_ma12_avgsecinfeedzonebout` double DEFAULT NULL,
+  `gar_ma12_avgclosestcalfdist` double DEFAULT NULL,
+  `gar_ma12_avgcalveswithin1m` double DEFAULT NULL,
+  `gar_ma12_avgcalveswithin3m` double DEFAULT NULL,
+  `gar_ma12_avgcalveswithin5m` double DEFAULT NULL,
+  `gar_ma12_per0win1m` double DEFAULT NULL,
+  `gar_ma12_per0win3m` double DEFAULT NULL,
+  `gar_ma12_per0win5m` double DEFAULT NULL,
+  `gar_ma12_per4ormorein3m` double DEFAULT NULL,
+  `gar_ma12_per4ormorein5m` double DEFAULT NULL,
+  `gar_ma12_per7ormorein3m` double DEFAULT NULL,
+  `gar_ma12_per7ormorein5m` double DEFAULT NULL,
+  `gar_ma12_per10ormorein3m` double DEFAULT NULL,
+  `gar_ma12_per10ormorein5m` double DEFAULT NULL,
+  `gar_ma12_perclosest7maway` double DEFAULT NULL,
+  `gar_ma12_perclosest10maway` double DEFAULT NULL,
+  `gar_ma24_disttrav` double DEFAULT NULL,
+  `gar_ma24_avgofspeedmpers` double DEFAULT NULL,
+  `gar_ma24_maxofspeedmpers` double DEFAULT NULL,
+  `gar_ma24_perinwater` double DEFAULT NULL,
+  `gar_ma24_perinfeedbunk` double DEFAULT NULL,
+  `gar_ma24_perinshed` double DEFAULT NULL,
+  `gar_ma24_perinwaterzone` double DEFAULT NULL,
+  `gar_ma24_perinfeedbunkzone` double DEFAULT NULL,
+  `gar_ma24_perinfencezone` double DEFAULT NULL,
+  `gar_ma24_persecspeed2mpersormore` double DEFAULT NULL,
+  `gar_ma24_feedbouts` double DEFAULT NULL,
+  `gar_ma24_avgsecinfeedbout` double DEFAULT NULL,
+  `gar_ma24_waterbouts` double DEFAULT NULL,
+  `gar_ma24_avgsecinwaterbout` double DEFAULT NULL,
+  `gar_ma24_shedbouts` double DEFAULT NULL,
+  `gar_ma24_avgsecinshedbout` double DEFAULT NULL,
+  `gar_ma24_fencebouts` double DEFAULT NULL,
+  `gar_ma24_avgsecinfencebout` double DEFAULT NULL,
+  `gar_ma24_waterzonebouts` double DEFAULT NULL,
+  `gar_ma24_avgsecinwaterzonebout` double DEFAULT NULL,
+  `gar_ma24_feedzonebouts` double DEFAULT NULL,
+  `gar_ma24_avgsecinfeedzonebout` double DEFAULT NULL,
+  `gar_ma24_avgclosestcalfdist` double DEFAULT NULL,
+  `gar_ma24_avgcalveswithin1m` double DEFAULT NULL,
+  `gar_ma24_avgcalveswithin3m` double DEFAULT NULL,
+  `gar_ma24_avgcalveswithin5m` double DEFAULT NULL,
+  `gar_ma24_per0win1m` double DEFAULT NULL,
+  `gar_ma24_per0win3m` double DEFAULT NULL,
+  `gar_ma24_per0win5m` double DEFAULT NULL,
+  `gar_ma24_per4ormorein3m` double DEFAULT NULL,
+  `gar_ma24_per4ormorein5m` double DEFAULT NULL,
+  `gar_ma24_per7ormorein3m` double DEFAULT NULL,
+  `gar_ma24_per7ormorein5m` double DEFAULT NULL,
+  `gar_ma24_per10ormorein3m` double DEFAULT NULL,
+  `gar_ma24_per10ormorein5m` double DEFAULT NULL,
+  `gar_ma24_perclosest7maway` double DEFAULT NULL,
+  `gar_ma24_perclosest10maway` double DEFAULT NULL,
+  `gar_ma48_disttrav` double DEFAULT NULL,
+  `gar_ma48_avgofspeedmpers` double DEFAULT NULL,
+  `gar_ma48_maxofspeedmpers` double DEFAULT NULL,
+  `gar_ma48_perinwater` double DEFAULT NULL,
+  `gar_ma48_perinfeedbunk` double DEFAULT NULL,
+  `gar_ma48_perinshed` double DEFAULT NULL,
+  `gar_ma48_perinwaterzone` double DEFAULT NULL,
+  `gar_ma48_perinfeedbunkzone` double DEFAULT NULL,
+  `gar_ma48_perinfencezone` double DEFAULT NULL,
+  `gar_ma48_persecspeed2mpersormore` double DEFAULT NULL,
+  `gar_ma48_feedbouts` double DEFAULT NULL,
+  `gar_ma48_avgsecinfeedbout` double DEFAULT NULL,
+  `gar_ma48_waterbouts` double DEFAULT NULL,
+  `gar_ma48_avgsecinwaterbout` double DEFAULT NULL,
+  `gar_ma48_shedbouts` double DEFAULT NULL,
+  `gar_ma48_avgsecinshedbout` double DEFAULT NULL,
+  `gar_ma48_fencebouts` double DEFAULT NULL,
+  `gar_ma48_avgsecinfencebout` double DEFAULT NULL,
+  `gar_ma48_waterzonebouts` double DEFAULT NULL,
+  `gar_ma48_avgsecinwaterzonebout` double DEFAULT NULL,
+  `gar_ma48_feedzonebouts` double DEFAULT NULL,
+  `gar_ma48_avgsecinfeedzonebout` double DEFAULT NULL,
+  `gar_ma48_avgclosestcalfdist` double DEFAULT NULL,
+  `gar_ma48_avgcalveswithin1m` double DEFAULT NULL,
+  `gar_ma48_avgcalveswithin3m` double DEFAULT NULL,
+  `gar_ma48_avgcalveswithin5m` double DEFAULT NULL,
+  `gar_ma48_per0win1m` double DEFAULT NULL,
+  `gar_ma48_per0win3m` double DEFAULT NULL,
+  `gar_ma48_per0win5m` double DEFAULT NULL,
+  `gar_ma48_per4ormorein3m` double DEFAULT NULL,
+  `gar_ma48_per4ormorein5m` double DEFAULT NULL,
+  `gar_ma48_per7ormorein3m` double DEFAULT NULL,
+  `gar_ma48_per7ormorein5m` double DEFAULT NULL,
+  `gar_ma48_per10ormorein3m` double DEFAULT NULL,
+  `gar_ma48_per10ormorein5m` double DEFAULT NULL,
+  `gar_ma48_perclosest7maway` double DEFAULT NULL,
+  `gar_ma48_perclosest10maway` double DEFAULT NULL,
+  UNIQUE KEY `idhourlyrtls_UNIQUE` (`idhourlyrtls`),
+  KEY `urecidorder_index` (`urecidorder`),
+  KEY `idcalfinfo_index` (`idcalfinfo`),
+  KEY `urecid_index` (`urecid`),
+  KEY `idhourlyrtls_index` (`idhourlyrtls`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+CREATE TABLE `meta2_hourlyrtls_cudiffc` (
+  `idhourlyrtls` int(11) NOT NULL,
+  `idcalfinfo` int(10) DEFAULT NULL,
+  `urecid` varchar(45) DEFAULT NULL,
+  `urecidorder` int(11) DEFAULT NULL,
+  `rtlstag` varchar(45) DEFAULT NULL,
+  `recorddate` date DEFAULT NULL,
+  `recordhour` int(2) DEFAULT NULL,
+  `cudiffc_car_ma6_disttrav` double DEFAULT NULL,
+  `cudiffc_car_ma6_avgofspeedmpers` double DEFAULT NULL,
+  `cudiffc_car_ma6_maxofspeedmpers` double DEFAULT NULL,
+  `cudiffc_car_ma6_perinwater` double DEFAULT NULL,
+  `cudiffc_car_ma6_perinfeedbunk` double DEFAULT NULL,
+  `cudiffc_car_ma6_perinshed` double DEFAULT NULL,
+  `cudiffc_car_ma6_perinwaterzone` double DEFAULT NULL,
+  `cudiffc_car_ma6_perinfeedbunkzone` double DEFAULT NULL,
+  `cudiffc_car_ma6_perinfencezone` double DEFAULT NULL,
+  `cudiffc_car_ma6_persecspeed2mpersormore` double DEFAULT NULL,
+  `cudiffc_car_ma6_feedbouts` double DEFAULT NULL,
+  `cudiffc_car_ma6_avgsecinfeedbout` double DEFAULT NULL,
+  `cudiffc_car_ma6_waterbouts` double DEFAULT NULL,
+  `cudiffc_car_ma6_avgsecinwaterbout` double DEFAULT NULL,
+  `cudiffc_car_ma6_shedbouts` double DEFAULT NULL,
+  `cudiffc_car_ma6_avgsecinshedbout` double DEFAULT NULL,
+  `cudiffc_car_ma6_fencebouts` double DEFAULT NULL,
+  `cudiffc_car_ma6_avgsecinfencebout` double DEFAULT NULL,
+  `cudiffc_car_ma6_waterzonebouts` double DEFAULT NULL,
+  `cudiffc_car_ma6_avgsecinwaterzonebout` double DEFAULT NULL,
+  `cudiffc_car_ma6_feedzonebouts` double DEFAULT NULL,
+  `cudiffc_car_ma6_avgsecinfeedzonebout` double DEFAULT NULL,
+  `cudiffc_car_ma6_avgclosestcalfdist` double DEFAULT NULL,
+  `cudiffc_car_ma6_avgcalveswithin1m` double DEFAULT NULL,
+  `cudiffc_car_ma6_avgcalveswithin3m` double DEFAULT NULL,
+  `cudiffc_car_ma6_avgcalveswithin5m` double DEFAULT NULL,
+  `cudiffc_car_ma6_per0win1m` double DEFAULT NULL,
+  `cudiffc_car_ma6_per0win3m` double DEFAULT NULL,
+  `cudiffc_car_ma6_per0win5m` double DEFAULT NULL,
+  `cudiffc_car_ma6_per4ormorein3m` double DEFAULT NULL,
+  `cudiffc_car_ma6_per4ormorein5m` double DEFAULT NULL,
+  `cudiffc_car_ma6_per7ormorein3m` double DEFAULT NULL,
+  `cudiffc_car_ma6_per7ormorein5m` double DEFAULT NULL,
+  `cudiffc_car_ma6_per10ormorein3m` double DEFAULT NULL,
+  `cudiffc_car_ma6_per10ormorein5m` double DEFAULT NULL,
+  `cudiffc_car_ma6_perclosest7maway` double DEFAULT NULL,
+  `cudiffc_car_ma6_perclosest10maway` double DEFAULT NULL,
+  `cudiffc_car_ma12_disttrav` double DEFAULT NULL,
+  `cudiffc_car_ma12_avgofspeedmpers` double DEFAULT NULL,
+  `cudiffc_car_ma12_maxofspeedmpers` double DEFAULT NULL,
+  `cudiffc_car_ma12_perinwater` double DEFAULT NULL,
+  `cudiffc_car_ma12_perinfeedbunk` double DEFAULT NULL,
+  `cudiffc_car_ma12_perinshed` double DEFAULT NULL,
+  `cudiffc_car_ma12_perinwaterzone` double DEFAULT NULL,
+  `cudiffc_car_ma12_perinfeedbunkzone` double DEFAULT NULL,
+  `cudiffc_car_ma12_perinfencezone` double DEFAULT NULL,
+  `cudiffc_car_ma12_persecspeed2mpersormore` double DEFAULT NULL,
+  `cudiffc_car_ma12_feedbouts` double DEFAULT NULL,
+  `cudiffc_car_ma12_avgsecinfeedbout` double DEFAULT NULL,
+  `cudiffc_car_ma12_waterbouts` double DEFAULT NULL,
+  `cudiffc_car_ma12_avgsecinwaterbout` double DEFAULT NULL,
+  `cudiffc_car_ma12_shedbouts` double DEFAULT NULL,
+  `cudiffc_car_ma12_avgsecinshedbout` double DEFAULT NULL,
+  `cudiffc_car_ma12_fencebouts` double DEFAULT NULL,
+  `cudiffc_car_ma12_avgsecinfencebout` double DEFAULT NULL,
+  `cudiffc_car_ma12_waterzonebouts` double DEFAULT NULL,
+  `cudiffc_car_ma12_avgsecinwaterzonebout` double DEFAULT NULL,
+  `cudiffc_car_ma12_feedzonebouts` double DEFAULT NULL,
+  `cudiffc_car_ma12_avgsecinfeedzonebout` double DEFAULT NULL,
+  `cudiffc_car_ma12_avgclosestcalfdist` double DEFAULT NULL,
+  `cudiffc_car_ma12_avgcalveswithin1m` double DEFAULT NULL,
+  `cudiffc_car_ma12_avgcalveswithin3m` double DEFAULT NULL,
+  `cudiffc_car_ma12_avgcalveswithin5m` double DEFAULT NULL,
+  `cudiffc_car_ma12_per0win1m` double DEFAULT NULL,
+  `cudiffc_car_ma12_per0win3m` double DEFAULT NULL,
+  `cudiffc_car_ma12_per0win5m` double DEFAULT NULL,
+  `cudiffc_car_ma12_per4ormorein3m` double DEFAULT NULL,
+  `cudiffc_car_ma12_per4ormorein5m` double DEFAULT NULL,
+  `cudiffc_car_ma12_per7ormorein3m` double DEFAULT NULL,
+  `cudiffc_car_ma12_per7ormorein5m` double DEFAULT NULL,
+  `cudiffc_car_ma12_per10ormorein3m` double DEFAULT NULL,
+  `cudiffc_car_ma12_per10ormorein5m` double DEFAULT NULL,
+  `cudiffc_car_ma12_perclosest7maway` double DEFAULT NULL,
+  `cudiffc_car_ma12_perclosest10maway` double DEFAULT NULL,
+  `cudiffc_car_ma24_disttrav` double DEFAULT NULL,
+  `cudiffc_car_ma24_avgofspeedmpers` double DEFAULT NULL,
+  `cudiffc_car_ma24_maxofspeedmpers` double DEFAULT NULL,
+  `cudiffc_car_ma24_perinwater` double DEFAULT NULL,
+  `cudiffc_car_ma24_perinfeedbunk` double DEFAULT NULL,
+  `cudiffc_car_ma24_perinshed` double DEFAULT NULL,
+  `cudiffc_car_ma24_perinwaterzone` double DEFAULT NULL,
+  `cudiffc_car_ma24_perinfeedbunkzone` double DEFAULT NULL,
+  `cudiffc_car_ma24_perinfencezone` double DEFAULT NULL,
+  `cudiffc_car_ma24_persecspeed2mpersormore` double DEFAULT NULL,
+  `cudiffc_car_ma24_feedbouts` double DEFAULT NULL,
+  `cudiffc_car_ma24_avgsecinfeedbout` double DEFAULT NULL,
+  `cudiffc_car_ma24_waterbouts` double DEFAULT NULL,
+  `cudiffc_car_ma24_avgsecinwaterbout` double DEFAULT NULL,
+  `cudiffc_car_ma24_shedbouts` double DEFAULT NULL,
+  `cudiffc_car_ma24_avgsecinshedbout` double DEFAULT NULL,
+  `cudiffc_car_ma24_fencebouts` double DEFAULT NULL,
+  `cudiffc_car_ma24_avgsecinfencebout` double DEFAULT NULL,
+  `cudiffc_car_ma24_waterzonebouts` double DEFAULT NULL,
+  `cudiffc_car_ma24_avgsecinwaterzonebout` double DEFAULT NULL,
+  `cudiffc_car_ma24_feedzonebouts` double DEFAULT NULL,
+  `cudiffc_car_ma24_avgsecinfeedzonebout` double DEFAULT NULL,
+  `cudiffc_car_ma24_avgclosestcalfdist` double DEFAULT NULL,
+  `cudiffc_car_ma24_avgcalveswithin1m` double DEFAULT NULL,
+  `cudiffc_car_ma24_avgcalveswithin3m` double DEFAULT NULL,
+  `cudiffc_car_ma24_avgcalveswithin5m` double DEFAULT NULL,
+  `cudiffc_car_ma24_per0win1m` double DEFAULT NULL,
+  `cudiffc_car_ma24_per0win3m` double DEFAULT NULL,
+  `cudiffc_car_ma24_per0win5m` double DEFAULT NULL,
+  `cudiffc_car_ma24_per4ormorein3m` double DEFAULT NULL,
+  `cudiffc_car_ma24_per4ormorein5m` double DEFAULT NULL,
+  `cudiffc_car_ma24_per7ormorein3m` double DEFAULT NULL,
+  `cudiffc_car_ma24_per7ormorein5m` double DEFAULT NULL,
+  `cudiffc_car_ma24_per10ormorein3m` double DEFAULT NULL,
+  `cudiffc_car_ma24_per10ormorein5m` double DEFAULT NULL,
+  `cudiffc_car_ma24_perclosest7maway` double DEFAULT NULL,
+  `cudiffc_car_ma24_perclosest10maway` double DEFAULT NULL,
+  `cudiffc_car_ma48_disttrav` double DEFAULT NULL,
+  `cudiffc_car_ma48_avgofspeedmpers` double DEFAULT NULL,
+  `cudiffc_car_ma48_maxofspeedmpers` double DEFAULT NULL,
+  `cudiffc_car_ma48_perinwater` double DEFAULT NULL,
+  `cudiffc_car_ma48_perinfeedbunk` double DEFAULT NULL,
+  `cudiffc_car_ma48_perinshed` double DEFAULT NULL,
+  `cudiffc_car_ma48_perinwaterzone` double DEFAULT NULL,
+  `cudiffc_car_ma48_perinfeedbunkzone` double DEFAULT NULL,
+  `cudiffc_car_ma48_perinfencezone` double DEFAULT NULL,
+  `cudiffc_car_ma48_persecspeed2mpersormore` double DEFAULT NULL,
+  `cudiffc_car_ma48_feedbouts` double DEFAULT NULL,
+  `cudiffc_car_ma48_avgsecinfeedbout` double DEFAULT NULL,
+  `cudiffc_car_ma48_waterbouts` double DEFAULT NULL,
+  `cudiffc_car_ma48_avgsecinwaterbout` double DEFAULT NULL,
+  `cudiffc_car_ma48_shedbouts` double DEFAULT NULL,
+  `cudiffc_car_ma48_avgsecinshedbout` double DEFAULT NULL,
+  `cudiffc_car_ma48_fencebouts` double DEFAULT NULL,
+  `cudiffc_car_ma48_avgsecinfencebout` double DEFAULT NULL,
+  `cudiffc_car_ma48_waterzonebouts` double DEFAULT NULL,
+  `cudiffc_car_ma48_avgsecinwaterzonebout` double DEFAULT NULL,
+  `cudiffc_car_ma48_feedzonebouts` double DEFAULT NULL,
+  `cudiffc_car_ma48_avgsecinfeedzonebout` double DEFAULT NULL,
+  `cudiffc_car_ma48_avgclosestcalfdist` double DEFAULT NULL,
+  `cudiffc_car_ma48_avgcalveswithin1m` double DEFAULT NULL,
+  `cudiffc_car_ma48_avgcalveswithin3m` double DEFAULT NULL,
+  `cudiffc_car_ma48_avgcalveswithin5m` double DEFAULT NULL,
+  `cudiffc_car_ma48_per0win1m` double DEFAULT NULL,
+  `cudiffc_car_ma48_per0win3m` double DEFAULT NULL,
+  `cudiffc_car_ma48_per0win5m` double DEFAULT NULL,
+  `cudiffc_car_ma48_per4ormorein3m` double DEFAULT NULL,
+  `cudiffc_car_ma48_per4ormorein5m` double DEFAULT NULL,
+  `cudiffc_car_ma48_per7ormorein3m` double DEFAULT NULL,
+  `cudiffc_car_ma48_per7ormorein5m` double DEFAULT NULL,
+  `cudiffc_car_ma48_per10ormorein3m` double DEFAULT NULL,
+  `cudiffc_car_ma48_per10ormorein5m` double DEFAULT NULL,
+  `cudiffc_car_ma48_perclosest7maway` double DEFAULT NULL,
+  `cudiffc_car_ma48_perclosest10maway` double DEFAULT NULL,
+  UNIQUE KEY `idhourlyrtls_UNIQUE` (`idhourlyrtls`),
+  KEY `urecidorder_index` (`urecidorder`),
+  KEY `idcalfinfo_index` (`idcalfinfo`),
+  KEY `urecid_index` (`urecid`),
+  KEY `idhourlyrtls` (`idhourlyrtls`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+CREATE TABLE `meta2_hourlyrtls_cudiffg` (
+  `idhourlyrtls` int(11) NOT NULL,
+  `idcalfinfo` int(10) DEFAULT NULL,
+  `urecid` varchar(45) DEFAULT NULL,
+  `urecidorder` int(11) DEFAULT NULL,
+  `chunk` int(11) DEFAULT NULL,
+  `rtlstag` varchar(45) DEFAULT NULL,
+  `recorddate` date DEFAULT NULL,
+  `recordhour` int(2) DEFAULT NULL,
+  `cudiffg_gar_disttrav` double DEFAULT NULL,
+  `cudiffg_gar_avgofspeedmpers` double DEFAULT NULL,
+  `cudiffg_gar_maxofspeedmpers` double DEFAULT NULL,
+  `cudiffg_gar_perinwater` double DEFAULT NULL,
+  `cudiffg_gar_perinfeedbunk` double DEFAULT NULL,
+  `cudiffg_gar_perinshed` double DEFAULT NULL,
+  `cudiffg_gar_perinwaterzone` double DEFAULT NULL,
+  `cudiffg_gar_perinfeedbunkzone` double DEFAULT NULL,
+  `cudiffg_gar_perinfencezone` double DEFAULT NULL,
+  `cudiffg_gar_persecspeed2mpersormore` double DEFAULT NULL,
+  `cudiffg_gar_feedbouts` double DEFAULT NULL,
+  `cudiffg_gar_avgsecinfeedbout` double DEFAULT NULL,
+  `cudiffg_gar_waterbouts` double DEFAULT NULL,
+  `cudiffg_gar_avgsecinwaterbout` double DEFAULT NULL,
+  `cudiffg_gar_shedbouts` double DEFAULT NULL,
+  `cudiffg_gar_avgsecinshedbout` double DEFAULT NULL,
+  `cudiffg_gar_fencebouts` double DEFAULT NULL,
+  `cudiffg_gar_avgsecinfencebout` double DEFAULT NULL,
+  `cudiffg_gar_waterzonebouts` double DEFAULT NULL,
+  `cudiffg_gar_avgsecinwaterzonebout` double DEFAULT NULL,
+  `cudiffg_gar_feedzonebouts` double DEFAULT NULL,
+  `cudiffg_gar_avgsecinfeedzonebout` double DEFAULT NULL,
+  `cudiffg_gar_avgclosestcalfdist` double DEFAULT NULL,
+  `cudiffg_gar_avgcalveswithin1m` double DEFAULT NULL,
+  `cudiffg_gar_avgcalveswithin3m` double DEFAULT NULL,
+  `cudiffg_gar_avgcalveswithin5m` double DEFAULT NULL,
+  `cudiffg_gar_per0win1m` double DEFAULT NULL,
+  `cudiffg_gar_per0win3m` double DEFAULT NULL,
+  `cudiffg_gar_per0win5m` double DEFAULT NULL,
+  `cudiffg_gar_per4ormorein3m` double DEFAULT NULL,
+  `cudiffg_gar_per4ormorein5m` double DEFAULT NULL,
+  `cudiffg_gar_per7ormorein3m` double DEFAULT NULL,
+  `cudiffg_gar_per7ormorein5m` double DEFAULT NULL,
+  `cudiffg_gar_per10ormorein3m` double DEFAULT NULL,
+  `cudiffg_gar_per10ormorein5m` double DEFAULT NULL,
+  `cudiffg_gar_perclosest7maway` double DEFAULT NULL,
+  `cudiffg_gar_perclosest10maway` double DEFAULT NULL,
+  `cudiffg_gar_perclosest15maway` double DEFAULT NULL,
+  `cudiffg_gar_ma12_disttrav` double DEFAULT NULL,
+  `cudiffg_gar_ma12_avgofspeedmpers` double DEFAULT NULL,
+  `cudiffg_gar_ma12_maxofspeedmpers` double DEFAULT NULL,
+  `cudiffg_gar_ma12_perinwater` double DEFAULT NULL,
+  `cudiffg_gar_ma12_perinfeedbunk` double DEFAULT NULL,
+  `cudiffg_gar_ma12_perinshed` double DEFAULT NULL,
+  `cudiffg_gar_ma12_perinwaterzone` double DEFAULT NULL,
+  `cudiffg_gar_ma12_perinfeedbunkzone` double DEFAULT NULL,
+  `cudiffg_gar_ma12_perinfencezone` double DEFAULT NULL,
+  `cudiffg_gar_ma12_persecspeed2mpersormore` double DEFAULT NULL,
+  `cudiffg_gar_ma12_feedbouts` double DEFAULT NULL,
+  `cudiffg_gar_ma12_avgsecinfeedbout` double DEFAULT NULL,
+  `cudiffg_gar_ma12_waterbouts` double DEFAULT NULL,
+  `cudiffg_gar_ma12_avgsecinwaterbout` double DEFAULT NULL,
+  `cudiffg_gar_ma12_shedbouts` double DEFAULT NULL,
+  `cudiffg_gar_ma12_avgsecinshedbout` double DEFAULT NULL,
+  `cudiffg_gar_ma12_fencebouts` double DEFAULT NULL,
+  `cudiffg_gar_ma12_avgsecinfencebout` double DEFAULT NULL,
+  `cudiffg_gar_ma12_waterzonebouts` double DEFAULT NULL,
+  `cudiffg_gar_ma12_avgsecinwaterzonebout` double DEFAULT NULL,
+  `cudiffg_gar_ma12_feedzonebouts` double DEFAULT NULL,
+  `cudiffg_gar_ma12_avgsecinfeedzonebout` double DEFAULT NULL,
+  `cudiffg_gar_ma12_avgclosestcalfdist` double DEFAULT NULL,
+  `cudiffg_gar_ma12_avgcalveswithin1m` double DEFAULT NULL,
+  `cudiffg_gar_ma12_avgcalveswithin3m` double DEFAULT NULL,
+  `cudiffg_gar_ma12_avgcalveswithin5m` double DEFAULT NULL,
+  `cudiffg_gar_ma12_per0win1m` double DEFAULT NULL,
+  `cudiffg_gar_ma12_per0win3m` double DEFAULT NULL,
+  `cudiffg_gar_ma12_per0win5m` double DEFAULT NULL,
+  `cudiffg_gar_ma12_per4ormorein3m` double DEFAULT NULL,
+  `cudiffg_gar_ma12_per4ormorein5m` double DEFAULT NULL,
+  `cudiffg_gar_ma12_per7ormorein3m` double DEFAULT NULL,
+  `cudiffg_gar_ma12_per7ormorein5m` double DEFAULT NULL,
+  `cudiffg_gar_ma12_per10ormorein3m` double DEFAULT NULL,
+  `cudiffg_gar_ma12_per10ormorein5m` double DEFAULT NULL,
+  `cudiffg_gar_ma12_perclosest7maway` double DEFAULT NULL,
+  `cudiffg_gar_ma12_perclosest10maway` double DEFAULT NULL,
+  `cudiffg_gar_ma12_perclosest15maway` double DEFAULT NULL,
+  `cudiffg_gar_ma24_disttrav` double DEFAULT NULL,
+  `cudiffg_gar_ma24_avgofspeedmpers` double DEFAULT NULL,
+  `cudiffg_gar_ma24_maxofspeedmpers` double DEFAULT NULL,
+  `cudiffg_gar_ma24_perinwater` double DEFAULT NULL,
+  `cudiffg_gar_ma24_perinfeedbunk` double DEFAULT NULL,
+  `cudiffg_gar_ma24_perinshed` double DEFAULT NULL,
+  `cudiffg_gar_ma24_perinwaterzone` double DEFAULT NULL,
+  `cudiffg_gar_ma24_perinfeedbunkzone` double DEFAULT NULL,
+  `cudiffg_gar_ma24_perinfencezone` double DEFAULT NULL,
+  `cudiffg_gar_ma24_persecspeed2mpersormore` double DEFAULT NULL,
+  `cudiffg_gar_ma24_feedbouts` double DEFAULT NULL,
+  `cudiffg_gar_ma24_avgsecinfeedbout` double DEFAULT NULL,
+  `cudiffg_gar_ma24_waterbouts` double DEFAULT NULL,
+  `cudiffg_gar_ma24_avgsecinwaterbout` double DEFAULT NULL,
+  `cudiffg_gar_ma24_shedbouts` double DEFAULT NULL,
+  `cudiffg_gar_ma24_avgsecinshedbout` double DEFAULT NULL,
+  `cudiffg_gar_ma24_fencebouts` double DEFAULT NULL,
+  `cudiffg_gar_ma24_avgsecinfencebout` double DEFAULT NULL,
+  `cudiffg_gar_ma24_waterzonebouts` double DEFAULT NULL,
+  `cudiffg_gar_ma24_avgsecinwaterzonebout` double DEFAULT NULL,
+  `cudiffg_gar_ma24_feedzonebouts` double DEFAULT NULL,
+  `cudiffg_gar_ma24_avgsecinfeedzonebout` double DEFAULT NULL,
+  `cudiffg_gar_ma24_avgclosestcalfdist` double DEFAULT NULL,
+  `cudiffg_gar_ma24_avgcalveswithin1m` double DEFAULT NULL,
+  `cudiffg_gar_ma24_avgcalveswithin3m` double DEFAULT NULL,
+  `cudiffg_gar_ma24_avgcalveswithin5m` double DEFAULT NULL,
+  `cudiffg_gar_ma24_per0win1m` double DEFAULT NULL,
+  `cudiffg_gar_ma24_per0win3m` double DEFAULT NULL,
+  `cudiffg_gar_ma24_per0win5m` double DEFAULT NULL,
+  `cudiffg_gar_ma24_per4ormorein3m` double DEFAULT NULL,
+  `cudiffg_gar_ma24_per4ormorein5m` double DEFAULT NULL,
+  `cudiffg_gar_ma24_per7ormorein3m` double DEFAULT NULL,
+  `cudiffg_gar_ma24_per7ormorein5m` double DEFAULT NULL,
+  `cudiffg_gar_ma24_per10ormorein3m` double DEFAULT NULL,
+  `cudiffg_gar_ma24_per10ormorein5m` double DEFAULT NULL,
+  `cudiffg_gar_ma24_perclosest7maway` double DEFAULT NULL,
+  `cudiffg_gar_ma24_perclosest10maway` double DEFAULT NULL,
+  `cudiffg_gar_ma24_perclosest15maway` double DEFAULT NULL,
+  `cudiffg_gar_ma48_disttrav` double DEFAULT NULL,
+  `cudiffg_gar_ma48_avgofspeedmpers` double DEFAULT NULL,
+  `cudiffg_gar_ma48_maxofspeedmpers` double DEFAULT NULL,
+  `cudiffg_gar_ma48_perinwater` double DEFAULT NULL,
+  `cudiffg_gar_ma48_perinfeedbunk` double DEFAULT NULL,
+  `cudiffg_gar_ma48_perinshed` double DEFAULT NULL,
+  `cudiffg_gar_ma48_perinwaterzone` double DEFAULT NULL,
+  `cudiffg_gar_ma48_perinfeedbunkzone` double DEFAULT NULL,
+  `cudiffg_gar_ma48_perinfencezone` double DEFAULT NULL,
+  `cudiffg_gar_ma48_persecspeed2mpersormore` double DEFAULT NULL,
+  `cudiffg_gar_ma48_feedbouts` double DEFAULT NULL,
+  `cudiffg_gar_ma48_avgsecinfeedbout` double DEFAULT NULL,
+  `cudiffg_gar_ma48_waterbouts` double DEFAULT NULL,
+  `cudiffg_gar_ma48_avgsecinwaterbout` double DEFAULT NULL,
+  `cudiffg_gar_ma48_shedbouts` double DEFAULT NULL,
+  `cudiffg_gar_ma48_avgsecinshedbout` double DEFAULT NULL,
+  `cudiffg_gar_ma48_fencebouts` double DEFAULT NULL,
+  `cudiffg_gar_ma48_avgsecinfencebout` double DEFAULT NULL,
+  `cudiffg_gar_ma48_waterzonebouts` double DEFAULT NULL,
+  `cudiffg_gar_ma48_avgsecinwaterzonebout` double DEFAULT NULL,
+  `cudiffg_gar_ma48_feedzonebouts` double DEFAULT NULL,
+  `cudiffg_gar_ma48_avgsecinfeedzonebout` double DEFAULT NULL,
+  `cudiffg_gar_ma48_avgclosestcalfdist` double DEFAULT NULL,
+  `cudiffg_gar_ma48_avgcalveswithin1m` double DEFAULT NULL,
+  `cudiffg_gar_ma48_avgcalveswithin3m` double DEFAULT NULL,
+  `cudiffg_gar_ma48_avgcalveswithin5m` double DEFAULT NULL,
+  `cudiffg_gar_ma48_per0win1m` double DEFAULT NULL,
+  `cudiffg_gar_ma48_per0win3m` double DEFAULT NULL,
+  `cudiffg_gar_ma48_per0win5m` double DEFAULT NULL,
+  `cudiffg_gar_ma48_per4ormorein3m` double DEFAULT NULL,
+  `cudiffg_gar_ma48_per4ormorein5m` double DEFAULT NULL,
+  `cudiffg_gar_ma48_per7ormorein3m` double DEFAULT NULL,
+  `cudiffg_gar_ma48_per7ormorein5m` double DEFAULT NULL,
+  `cudiffg_gar_ma48_per10ormorein3m` double DEFAULT NULL,
+  `cudiffg_gar_ma48_per10ormorein5m` double DEFAULT NULL,
+  `cudiffg_gar_ma48_perclosest7maway` double DEFAULT NULL,
+  `cudiffg_gar_ma48_perclosest10maway` double DEFAULT NULL,
+  `cudiffg_gar_ma48_perclosest15maway` double DEFAULT NULL,
+  `hourlyrtls_cudiffgcol` varchar(45) DEFAULT NULL,
+  UNIQUE KEY `idhourlyrtls_UNIQUE` (`idhourlyrtls`),
+  KEY `urecidorder_index` (`urecidorder`),
+  KEY `idcalfinfo_index` (`idcalfinfo`),
+  KEY `urecid_index` (`urecid`),
+  KEY `idhourlyrtls` (`idhourlyrtls`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+Insert into meta2_hourlyrtls (Select * from hourlyrtls);
+Insert into meta2_hourlyrtls_car (Select * from hourlyrtls_car);
+Insert into meta2_hourlyrtls_gar (Select * from hourlyrtls_gar);
+Insert into meta2_hourlyrtls_cudiffc (Select * from hourlyrtls_cudiffc);
+Insert into meta2_hourlyrtls_cudiffg (Select * from hourlyrtls_cudiffg);
+
+
+
